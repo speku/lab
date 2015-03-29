@@ -2,6 +2,12 @@ package de.hhn.se.labsw.gdt.library;
 
 import java.awt.Color;
 
+/**
+ * Class representing the current state of a player.
+ * 
+ * @author Maximilian Roeck
+ *
+ */
 public class PlayerState {
 	/**
 	 * The color assigned to the player.
@@ -14,11 +20,15 @@ public class PlayerState {
 	/**
 	 * The name of the player.
 	 */
-	protected String playerName;
+	protected String name;
 	/**
 	 * The amount of action points of the player.
 	 */
 	protected int ap;
+	/**
+	 * The user adjusted amount of action points a player is supposed to receive per round.
+	 */
+	protected int apCustomized;
 	/**
 	 * The player's score.
 	 */
@@ -27,4 +37,8 @@ public class PlayerState {
 	 * The player's age.
 	 */
 	protected int age;
+	/**
+	 * The player's id.
+	 */
+	protected int id;
 }

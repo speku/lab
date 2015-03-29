@@ -149,12 +149,12 @@ public class Game extends GameState implements GameDefaults {
 	 * @return
 	 * 			the player with the given number
 	 */
-	public Player getPlayer(int player) {
-		if (player < 1 || player > players.size()) {
+	public Player getPlayer(int id) {
+		if (id < 1 || id > players.size()) {
 			return null;
 		} else {
 			for (Player p : players) {
-				if (p.getNumber() == p) {
+				if (p.getId() == id) {
 					return p;
 				}
 			}
