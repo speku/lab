@@ -12,32 +12,58 @@ import org.glassfish.jersey.media.sse.SseBroadcaster;
 import de.hhn.se.labsw.gdt.library.*;
 
 
+// ###########################################################################
+//  NOT WORKING - SHIIIIIIIIT
+// #########################################################################
+/**
+ * Resource Class used by clients to register with the server and notify other 
+ * clients of updates to game states
+ * 
+ * @author Maximilian Roeck
+ *
+ */
 @Singleton
 @Path("broadcasts")
 public final class BroadcasterResource {
 
-    private static SseBroadcaster broadcaster = new SseBroadcaster();
+	/**
+	 * Broadcaster instance.
+	 */
+    private static final SseBroadcaster BROADCASTER = new SseBroadcaster();
 
+    /**
+     * Invoked by clients to broadcast updates to the game states stored on the server.
+     * 
+     * @param gs
+     * 			the game state to be broadcast
+     * @return
+     * 			acknowledgment of a successful broadcast
+     */
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public static String broadcastMessage(GameState gs) {
-        OutboundEvent.Builder eventBuilder = new OutboundEvent.Builder();
-        OutboundEvent event = eventBuilder.name("modelEvent")
-            .mediaType(MediaType.TEXT_PLAIN_TYPE)
-            .data(GameState.class, gs)
-            .build();
+    @Produces(SseFeature.SERVER_SENT_EVENTS)
+    @Consumes("application/json")
+    public static void broadcastUpdate(GameState gs) {
+    	System.out.println("broadcast received");
 
-        broadcaster.broadcast(event);
+//        BROADCASTER.broadcast(new OutboundEvent.Builder().mediaType(MediaType.APPLICATION_JSON_TYPE).data(GameState.class, gs).build());
+    	//BROADCASTER.broadcast(new OutboundEvent.Builder().data(GameState.class, gs).build());
+    	BROADCASTER.broadcast(new OutboundEvent.Builder().mediaType(MediaType.APPLICATION_JSON_TYPE).data(GameState.class, gs).build());
+    	System.out.println("broadcast send to broadcaster");
 
-        return "Model " + gs + " has been broadcast";
     }
 
+    /**
+     * Invoked by clients to register with the server.
+     * 
+     * @return
+     * 			eventOutput object, used as a "socket" to the server
+     */
     @GET
     @Produces(SseFeature.SERVER_SENT_EVENTS)
     public EventOutput listenToBroadcast() {
+    	System.out.println("registration received");
         final EventOutput eventOutput = new EventOutput();
-        this.broadcaster.add(eventOutput);
+        BROADCASTER.add(eventOutput);
         return eventOutput;
     }
 }

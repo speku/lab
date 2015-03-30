@@ -5,26 +5,66 @@ import java.util.Map;
 
 import de.hhn.se.labsw.gdt.library.*;
 
-
+/**
+ * Enumeration that acts as a data access object.
+ * 
+ * @author Maximilian Roeck
+ *
+ */
 public enum Dao {
 
+	/**
+	 * The one and only instance of the singleton.
+	 */
 	instance;
 	
+	/**
+	 * Holds the game states currently stored on the server.
+	 */
 	private Map<String, GameState> contentProvider = new HashMap<String, GameState>();
 	
+	/**
+	 * Private constructor since we are so special.
+	 * Perfect place for debug code.
+	 */
 	private Dao() {
+		
+		// debugging mambo jambo - wuut?
 //		GameState gs = new Game(8, 8, new int[]{4,3,3}, new User("Hans"));
 //		contentProvider.put(gs.getHost().getName(), gs);
 	}
 	
+	/**
+	 * Retrieves all game states currently stored on the server.
+	 * 
+	 * @return
+	 * 			states of all the games currently stored on the server,
+	 * 			packaged in an handy map.
+	 */
 	public Map<String, GameState> getContent(){
 		return contentProvider;
 	}
 	
+	/**
+	 * Retrieves a specific game state from the server.
+	 * 
+	 * @param key
+	 * 			the key to which the assigned value shall be retrieved
+	 * @return
+	 * 			the state of a game
+	 */
 	public GameState getContentInstance(String key) {
 		return contentProvider.get(key);
 	}
 	
+	/**
+	 * Creates/Updates a game state on the server.
+	 * 
+	 * @param key
+	 * 			indicates the game that shall be updated/created
+	 * @param value
+	 * 			the new/updated game state date
+	 */
 	public void putContentInstance(String key, GameState value) {
 		contentProvider.put(key, value);
 	}

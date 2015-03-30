@@ -9,7 +9,12 @@ import javax.xml.bind.JAXBElement;
 import de.hhn.se.labsw.gdt.server.dao.*;
 import de.hhn.se.labsw.gdt.library.*;
 
-
+/**
+ * Class that acts as an entry points for client-side HTTP requests.
+ * 
+ * @author Maximilian Roeck
+ *
+ */
 @Path("resources")
 public class Resources {
 	
@@ -24,7 +29,6 @@ public class Resources {
 	 */
 	@GET
 	@Path("games/{gameId}")
-	//@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public GameState getGameState(@PathParam("gameId") String gameId) {
 		return Dao.instance.getContentInstance(gameId);
@@ -55,7 +59,7 @@ public class Resources {
 	@POST
 	@Path("games/{gameId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON) // only for debugging purposes 
+//	@Produces(MediaType.APPLICATION_JSON) // only for debugging purposes 
 	public void setGameState(@PathParam("gameId") String gameId, GameState gs) {
 		Dao.instance.putContentInstance(gameId, gs);
 	}
