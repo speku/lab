@@ -1,6 +1,7 @@
 package de.hhn.se.labsw.gdt.library;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class representing the current state of a game.
@@ -8,6 +9,7 @@ import java.util.ArrayList;
  * @author Maximilian Roeck
  *
  */
+@XmlRootElement
 public class GameState {
 	/**
 	 * The currently active player.

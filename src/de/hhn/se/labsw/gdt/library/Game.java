@@ -205,10 +205,14 @@ public class Game extends GameState implements GameDefaults {
 	 * 
 	 * @param depth
 	 * 			the updated depth of the cell
+	 * 
+	 * @param excavator
+	 * 			whether or not an excavator occupies the cell
 	 */
-	public void updateMap(int row, int column, int occupancy, int depth) {
+	public void updateMap(int row, int column, int occupancy, int depth, int excavator) {
 		this.map[row][column][0] = occupancy;
 		this.map[row][column][1] = depth;
+		this.map[row][column][2] = excavator;
 	}
 	/**
 	 * Method for retrieving cell information.

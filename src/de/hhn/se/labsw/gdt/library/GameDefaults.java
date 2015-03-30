@@ -18,7 +18,7 @@ public interface GameDefaults {
 	/**
 	 * Indicates how many properties every cell of the map holds.
 	 */
-	public static final int CELL_PROPERTIES = 2;
+	public static final int CELL_PROPERTIES = 3;
 	/**
 	 * The slot index represents the phase (plus 1), and its value represents the number of rounds of the phase.
 	 */
