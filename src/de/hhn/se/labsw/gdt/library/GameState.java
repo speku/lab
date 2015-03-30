@@ -9,7 +9,10 @@ import java.util.ArrayList;
  *
  */
 public class GameState {
-	
+	/**
+	 * The currently active player.
+	 */
+	protected Player activePlayer;
 	/**
 	 * ArrayList of all the players participating in the game.
 	 */
@@ -26,11 +29,14 @@ public class GameState {
 	 * 2 = occupied by player 2
 	 * 3 = occupied by player 3
 	 * 4 = occupied by player 4
-	 * 5 = occupied by the excavator
 	 * 
 	 * The second slot of the innermost array holds information regarding the depth of the cell.
 	 * Only positive values are valid.
 	 * A value of 1 indicates a cell of depth 1 below ground floor etc.
+	 * 
+	 * The third slot of the innermost array holds information regarding the presence of the
+	 * excavator. A value of 1 indicates that the excavator is present on the cell, 2 indicates
+	 * that it is absent.
 	 */
 	protected int[][][] map;
 	/**
@@ -49,4 +55,35 @@ public class GameState {
 	 */
 	protected int[][] phaseRoundStatus;
 	
+	// getters and setters for all fields - javaDoc will follow ... sometime
+	public Player getActivePlayer() {
+		return activePlayer;
+	}
+	public void setActivePlayer(Player activePlayer) {
+		this.activePlayer = activePlayer;
+	}
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+	}
+	public int[][][] getMap() {
+		return map;
+	}
+	public void setMap(int[][][] map) {
+		this.map = map;
+	}
+	public User getHost() {
+		return host;
+	}
+	public void setHost(User host) {
+		this.host = host;
+	}
+	public int[][] getPhaseRoundStatus() {
+		return phaseRoundStatus;
+	}
+	public void setPhaseRoundStatus(int[][] phaseRoundStatus) {
+		this.phaseRoundStatus = phaseRoundStatus;
+	}	
 }

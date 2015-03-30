@@ -101,6 +101,19 @@ public class Game extends GameState implements GameDefaults {
 		}
 	}
 	/**
+	 * Constructor using a GameState object to create a game.
+	 * 
+	 * @param gs
+	 * 			the game state the game is supposed to be created from
+	 */
+	public Game(GameState gs) {
+		this.activePlayer = gs.getActivePlayer();
+		this.phaseRoundStatus = gs.getPhaseRoundStatus();
+		this.players = gs.getPlayers();
+		this.map = gs.getMap();
+		this.host = gs.getHost();	
+	}
+	/**
 	 * Method for retrieving the number of the map's rows.
 	 * 
 	 * @return the number of rows of the map
@@ -225,6 +238,11 @@ public class Game extends GameState implements GameDefaults {
 	 */
 	public void setHost(User host) {
 		this.host = host;
+	}
+	
+	public GameState getGameState() {
+		GameState gs = this;
+		return gs;
 	}
 }
 
