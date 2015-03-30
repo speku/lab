@@ -12,6 +12,10 @@ import java.util.ArrayList;
  */
 public class Game extends GameState implements GameDefaults {
 	
+	// #################################################################
+	// MVC code (JavaFX) still needs to be implemented
+	// #################################################################
+	
 	/**
 	 * Adjustable value for the number of rows. Initialized with the default value.
 	 */
@@ -247,6 +251,24 @@ public class Game extends GameState implements GameDefaults {
 	public GameState getGameState() {
 		GameState gs = this;
 		return gs;
+	}
+	
+	/**
+	 * Updates the state of the game.
+	 * 
+	 * @param gs
+	 * 			the game state from which the game is supposed to be updated
+	 */
+	public void updateGameState(GameState gs) {
+		this.activePlayer = gs.getActivePlayer();
+		this.phaseRoundStatus = gs.getPhaseRoundStatus();
+		this.players = gs.getPlayers();
+		this.map = gs.getMap();
+		this.host = gs.getHost();
+		
+		// do not know about sufficient JavaFX implementation
+		// but speaking in Swing analogies, one should place
+		// a notifyOberserver() method invocation here.
 	}
 }
 

@@ -57,7 +57,7 @@ public class GameState {
 	 */
 	protected int[][] phaseRoundStatus;
 	
-	// getters and setters for all fields - javaDoc will follow ... sometime
+	// getters and setters for all fields - javaDoc will follow ... sometime ... please feel free to ...
 	public Player getActivePlayer() {
 		return activePlayer;
 	}
