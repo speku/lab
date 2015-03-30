@@ -10,6 +10,7 @@
         <param-value>de.hhn.se.labsw.gdt.server.resources</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
   </servlet>
   <servlet-mapping>
     <servlet-name>Jersey REST Service</servlet-name>

@@ -4,25 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.hhn.se.labsw.gdt.library.*;
-import de.hhn.se.labsw.gdt.server.model.*;
+
 
 public enum Dao {
 
 	instance;
 	
-	private Map<String, Model> contentProvider = new HashMap<String, Model>();
+	private Map<String, GameState> contentProvider = new HashMap<String, GameState>();
 	
 	private Dao() {
-		GameState gs = new Game(8, 8, new int[]{4,3,3}, new User("Hans"));
-		Model m = new Model(gs);
-		contentProvider.put(gs.getHost().getName(), m);
+//		GameState gs = new Game(8, 8, new int[]{4,3,3}, new User("Hans"));
+//		contentProvider.put(gs.getHost().getName(), gs);
 	}
 	
-	public Map<String, Model> getContent(){
+	public Map<String, GameState> getContent(){
 		return contentProvider;
 	}
 	
-	public Model getContentInstance(String key) {
+	public GameState getContentInstance(String key) {
 		return contentProvider.get(key);
+	}
+	
+	public void putContentInstance(String key, GameState value) {
+		contentProvider.put(key, value);
 	}
 }
