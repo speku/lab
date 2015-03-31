@@ -2,8 +2,6 @@ package de.hhn.se.labsw.gdt.library;
 
 import java.awt.Color;
 
-
-
 /**
  * Class representing a player playing a game.
  * 
@@ -216,6 +214,31 @@ public class Player extends PlayerState implements PlayerDefaults{
 	public int getId() {
 		return this.id;
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
