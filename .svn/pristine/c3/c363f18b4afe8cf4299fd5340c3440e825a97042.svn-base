@@ -12,6 +12,9 @@ import org.glassfish.jersey.media.sse.SseBroadcaster;
 import de.hhn.se.labsw.gdt.library.*;
 
 
+// ###########################################################################
+//  NOT WORKING - SHIIIIIIIIT
+// #########################################################################
 /**
  * Resource Class used by clients to register with the server and notify other 
  * clients of updates to game states
@@ -26,7 +29,7 @@ public final class BroadcasterResource {
 	/**
 	 * Broadcaster instance.
 	 */
-    private static SseBroadcaster broadcaster = new SseBroadcaster();
+    private static final SseBroadcaster BROADCASTER = new SseBroadcaster();
 
     /**
      * Invoked by clients to broadcast updates to the game states stored on the server.
@@ -44,7 +47,7 @@ public final class BroadcasterResource {
 
 //        BROADCASTER.broadcast(new OutboundEvent.Builder().mediaType(MediaType.APPLICATION_JSON_TYPE).data(GameState.class, gs).build());
     	//BROADCASTER.broadcast(new OutboundEvent.Builder().data(GameState.class, gs).build());
-    	broadcaster.broadcast(new OutboundEvent.Builder().mediaType(MediaType.APPLICATION_JSON_TYPE).data(GameState.class, gs).build());
+    	BROADCASTER.broadcast(new OutboundEvent.Builder().mediaType(MediaType.APPLICATION_JSON_TYPE).data(GameState.class, gs).build());
     	System.out.println("broadcast send to broadcaster");
 
     }
@@ -60,7 +63,7 @@ public final class BroadcasterResource {
     public EventOutput listenToBroadcast() {
     	System.out.println("registration received");
         final EventOutput eventOutput = new EventOutput();
-        broadcaster.add(eventOutput);
+        BROADCASTER.add(eventOutput);
         return eventOutput;
     }
 }
