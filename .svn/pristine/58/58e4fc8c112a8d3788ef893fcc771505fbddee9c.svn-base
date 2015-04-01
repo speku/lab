@@ -41,12 +41,13 @@ public class BroadcasterResource {
     @Produces(SseFeature.SERVER_SENT_EVENTS)
     @Consumes("application/json")
     public static void broadcastUpdate(GameState gs) {
+    	System.out.println("broadcast received");
+
+//        BROADCASTER.broadcast(new OutboundEvent.Builder().mediaType(MediaType.APPLICATION_JSON_TYPE).data(GameState.class, gs).build());
+    	//BROADCASTER.broadcast(new OutboundEvent.Builder().data(GameState.class, gs).build());
     	broadcaster.broadcast(new OutboundEvent.Builder().mediaType(MediaType.APPLICATION_JSON_TYPE).data(GameState.class, gs).build());
-    }
-    
-    @DELETE
-    public static void broadcastDelete() {
-    	broadcaster.broadcast(new OutboundEvent.Builder().id("delete").build());
+    	System.out.println("broadcast send to broadcaster");
+
     }
 
     /**

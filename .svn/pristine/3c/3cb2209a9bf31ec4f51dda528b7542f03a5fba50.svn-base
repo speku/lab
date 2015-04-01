@@ -68,12 +68,6 @@ public class Resources {
 		Dao.instance.putContentInstance(gameId, gs);
 	}
 	
-	@DELETE
-	@Path("games/{gameId}")
-	public static void deleteGameState(@PathParam("gameId") String gameId) {
-		Dao.instance.removeContentInstance(gameId);
-	}
-	
 	// All other operations will be performed via server-sent events.
 	// This greatly simplifies the process of synchronizing the clients connected to the server in 
 	// regards to updates of the data model that is stored on the server.

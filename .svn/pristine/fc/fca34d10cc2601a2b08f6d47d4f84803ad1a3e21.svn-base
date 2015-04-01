@@ -57,10 +57,6 @@ public enum Dao {
 		return contentProvider.get(key);
 	}
 	
-	public static void removeContentInstance(String key) {
-		 contentProvider.remove(key);
-	}
-	
 	/**
 	 * Creates/Updates a game state on the server.
 	 * 
@@ -71,6 +67,5 @@ public enum Dao {
 	 */
 	public static void putContentInstance(String key, GameState value) {
 		contentProvider.put(key, value);
-		System.out.println("new game state stored");
 	}
 }
