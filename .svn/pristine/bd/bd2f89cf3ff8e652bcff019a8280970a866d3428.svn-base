@@ -137,15 +137,9 @@ public class InspectPlayerBox extends VBox {
 				}
 			}
 		}
-			
-	}
-	
-	public void clear() {
-		playerNameVal.setText("");
-		playerColorVal.getSelectionModel().select("");
-		playerAgeVal.setText("");;
-		playerScoreVal.setText("");
-		playerApVal.setText("");
+		
+		
+		
 	}
 
 	public Label getPlayerColor() {

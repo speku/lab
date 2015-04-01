@@ -42,7 +42,7 @@ public class Utility {
 			if(inspect) {
 				Storage.inspectedGame = gs;
 			} else {
-//				Storage.hostedGame = gs;
+				Storage.hostedGame = gs;
 			}
 		}
 	}

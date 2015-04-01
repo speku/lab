@@ -2,17 +2,13 @@ package de.hhn.se.labsw.gdt.client.gui;
 
 
 
-import java.util.ArrayList;
-
 import de.hhn.se.labsw.gdt.client.controller.Controller;
 import de.hhn.se.labsw.gdt.client.util.Connector;
 import de.hhn.se.labsw.gdt.client.util.Storage;
 import de.hhn.se.labsw.gdt.client.util.Utility;
-import de.hhn.se.labsw.gdt.library.GameState;
 import de.hhn.se.labsw.gdt.library.Player;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -102,9 +98,7 @@ public class MainMenu extends Stage{
 		        Utility.setupGame(newValue, true);
 		        listInspect.setItems(Utility.getGameData());
 		        ObservableList<String> items = listInspect.getItems();
-		        if (items != null && items.size() > 0) {
-		        	playerBox.displayPlayerData(items.get(0));
-		        }
+		        playerBox.displayPlayerData(items.get(0));
 		    }
 		});
 		
@@ -127,98 +121,45 @@ public class MainMenu extends Stage{
 		buttonCreate.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent evt){
-				
-				// disable game Browser interaction
-				listBrowser.setMouseTransparent( true );
-				listBrowser.setFocusTraversable( false );
-				
-				// disable inspectList interaction
-				listInspect.setMouseTransparent( true );
-				listInspect.setFocusTraversable( false );
-				
-				// create new active game
-				Storage.activeGame = new GameState();
-				// the user will be the host of this game
-				Storage.activeGame.setHost(Storage.user);
-				// create a new player for the user
-				Storage.playerOfUser = new Player(Storage.user.getName());
-				// add an ArrayList for new players
-				Storage.activeGame.setPlayers(new ArrayList<Player>());
-				// add the new player to the active game
-				Storage.activeGame.addPlayer(Storage.playerOfUser);
-				// update list by first setting the inspected game to the active game
-				Storage.inspectedGame = Utility.cloneGameState(Storage.activeGame);
-				if (Storage.inspectedGame == null) System.out.println("inspected game  null");
-//				 setup the inspected game
-//				Utility.setupGame(Storage.inspectedGame.getHost().getName(), true);
-				// locally update Browser 
-				ObservableList<String> listData = FXCollections.observableArrayList();
-				if (Storage.inspectedGame == null) System.out.println("inspected game  null");
-				if (Storage.inspectedGame.getHost() != null) System.out.println("host not null");
-				listData.add(Storage.inspectedGame.getHost().getName());
-				listBrowser.setItems(listData);
-				// select the newly added game within the browser
-				listBrowser.getSelectionModel().select(Storage.inspectedGame.getHost().getName());
-				// update the inspect view of the game
+				Utility.setupGame(Storage.user.getName(), false);
 				listInspect.setItems(Utility.getGameData());
-				// select the newly created player and display his data
-				listInspect.getSelectionModel().select(Storage.user.getName());
-				playerBox.displayPlayerData(Storage.playerOfUser.getName());
-				// post the new game and overwrite
-				// this automatically triggers an update of the game browser and game inspect list
-				Connector.postGame(Storage.activeGame.getHost().getName(), Storage.activeGame);
-				// set attributes editable
-				playerBox.changeEditable(true);
-				
-				// enable accept button
-				buttonAccept.setDisable(false);
-				
-				// disable creation of new games
-				buttonCreate.setDisable(true);
-				
-				// enable leave
-				buttonLeave.setDisable(false);
-				
-				// disable join button
-				buttonJoin.setDisable(true);
-				
-				// disable edit button
-				buttonEdit.setDisable(true);
-				
-				Storage.gameHosted = true;
-				
-				
-				
-				
-				
+//				new GameMenu();
+//				MainMenu.this.hide();
+//				forceListRefreshOn(listBrowser);
+//				forceListRefreshOn(listInspect);
 				
 			}
 		});
-	
+		
+//		buttonRefresh = new Button("refresh");
+//		buttonRefresh.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent evt){
+//				listBrowser.setItems(Utility.getBrowserData());
+//				listInspect.setItems(Utility.getGameData());
+////				forceListRefreshOn(listBrowser);
+////				forceListRefreshOn(listInspect);
+//				
+//			}
+//		});
 		
 		buttonLeave = new Button("leave");
 		buttonLeave.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent evt){
 				
-				// if the user is not the host
-				if (!Storage.gameHosted) {
-					// remove user/player from Game
-					Storage.activeGame.removePlayer(Storage.playerOfUser);
-					// update the Server storage
-					Connector.postGame(Storage.activeGame.getHost().getName(), Storage.activeGame);
-					// update list data
-					 Utility.setupGame(Storage.activeGame.getHost().getName(), true);
-				     listInspect.setItems(Utility.getGameData());
-				} else {
-					Connector.deleteGame(Storage.activeGame.getHost().getName(), Storage.activeGame);
-				}
+				// remove user/player from Game
+				Storage.activeGame.removePlayer(Storage.playerOfUser);
+				// update the Server storage
+				Connector.postGame(Storage.activeGame.getHost().getName(), Storage.activeGame);
+				// update list data
+				 Utility.setupGame(Storage.activeGame.getHost().getName(), true);
+			     listInspect.setItems(Utility.getGameData());
+			
 				// delete active game
 				Storage.activeGame = null;
 				// delete user's player
 				Storage.playerOfUser = null;
-				
-				
 				// change button state
 				buttonJoin.setDisable(false);
 				buttonCreate.setDisable(false);
@@ -227,14 +168,11 @@ public class MainMenu extends Stage{
 				buttonEdit.setDisable(true);
 				
 				// update list
-				
-					String currentlySelectedGame = listBrowser.getSelectionModel().getSelectedItem();
-					Utility.setupGame(currentlySelectedGame, true);
-					listInspect.setItems(Utility.getGameData());
-					ObservableList<String> items = listInspect.getItems();
-			        if (items != null && items.size() > 0) {
-			        	playerBox.displayPlayerData(items.get(0));
-			        }
+				String currentlySelectedGame = listBrowser.getSelectionModel().getSelectedItem();
+				Utility.setupGame(currentlySelectedGame, true);
+				listInspect.setItems(Utility.getGameData());
+				ObservableList<String> items = listInspect.getItems();
+		        playerBox.displayPlayerData(items.get(0));
 				
 				playerBox.changeEditable(false);
 				
@@ -245,9 +183,6 @@ public class MainMenu extends Stage{
 				// enable inspectList interaction
 				listInspect.setMouseTransparent( false );
 				listInspect.setFocusTraversable( true );
-				
-				// the user leaves his own game, so no more hosting 
-				Storage.gameHosted = false;
 			}
 		});
 		
@@ -302,9 +237,6 @@ public class MainMenu extends Stage{
 				
 				// disable join button
 				buttonJoin.setDisable(true);
-				
-				// disable edit button
-				buttonEdit.setDisable(true);
 				
 				
 				
@@ -442,7 +374,10 @@ public class MainMenu extends Stage{
 				listInspect.setMouseTransparent( false );
 				listInspect.setFocusTraversable( true );
 				
-				
+				// if browser is empty then no join button
+				if (Utility.getBrowserData().isEmpty()) {
+					buttonJoin.setDisable(true);
+				}
 				
 			}
 		});
@@ -470,33 +405,12 @@ public class MainMenu extends Stage{
 		this.setScene(scene);
 		this.show();
 		
-		// if browser is empty then no join button
-		if (Utility.getBrowserData().isEmpty()) {
-			buttonJoin.setDisable(true);
-			buttonCreate.setDisable(false);
-		}
-		
 		// hand reference of this object to Controller
 		Controller.setMainMenu(this);
 	}
 	
 	
 	public void refreshBrowser() {
-		
-		if (Utility.getBrowserData().isEmpty()) {
-			buttonJoin.setDisable(true);
-			buttonCreate.setDisable(false);
-			
-			listBrowser.getItems().clear();
-			listInspect.getItems().clear();
-			playerBox.clear();
-			
-			
-		} else {
-			buttonJoin.setDisable(false);
-			buttonCreate.setDisable(true);
-		
-		
 		// safe current game and player selection
 		String selectedGame = listBrowser.getSelectionModel().getSelectedItem();
 		String selectedPlayer = listInspect.getSelectionModel().getSelectedItem();
@@ -515,7 +429,7 @@ public class MainMenu extends Stage{
 		// update the player data 
 		playerBox.displayPlayerData(selectedPlayer);
 		
-		}
+	        
 	}
 	
 	

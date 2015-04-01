@@ -88,26 +88,21 @@ public final class Connector {
 	private static EventSource sseEventSource = new EventSource(sseWebTarget) {
 	    @Override
 	    public void onEvent(InboundEvent inboundEvent) {
-	    	if (inboundEvent.getId() == null || !inboundEvent.getId().equals("delete")) {
+	    	GameState gs = inboundEvent.readData(GameState.class);
+	    	if (Controller.getMainMenu() != null && Controller.getMainMenu().isShowing()) { 
 	    		
-	    	
-		    	GameState gs = inboundEvent.readData(GameState.class);
-		    	controllerGs = gs;
+	    		Platform.runLater(new Runnable() {
+	    		    @Override
+	    		    public void run() {
+	    		    	((MainMenu)Controller.getMainMenu()).refreshBrowser();
+	    		    }
+	    		});
 	    	}
 	    	
-	    	 if (Controller.getMainMenu() != null && Controller.getMainMenu().isShowing()) { 
-		    		
-		    		Platform.runLater(new Runnable() {
-		    		    @Override
-		    		    public void run() {
-		    		    	((MainMenu)Controller.getMainMenu()).refreshBrowser();
-		    		    }
-		    		});
-		    	}
-		    
-	    	} 
-	    
-	    
+	    	// debug
+	    	controllerGs = gs;
+        	
+	    }
 	};
 	
 //	private static EventListener sseListener = new EventListener() {
@@ -167,22 +162,6 @@ public final class Connector {
 		// solution.
 	}
 	
-	public static void deleteGame(String gameId, GameState gs) {
-		// post the game state
-		
-		gamesWebTarget.path(gameId).request().delete();
-		// notify other clients (kinda like MVC - but distributed)
-		broadcastDeletes(); 
-		// The updates are directly broadcast to the other clients without checking 
-		// for consistency with the game state that has been stored on the server.
-		// Since exactly the same arguments are sent this should be a non-issue but still feels like a sloppy
-		// solution.
-	}
-	
-	public static void broadcastDeletes() {
-		sseWebTarget.request().delete();
-	}
-	
 	/**
 	 * Broadcasts updates to the game state to all clients registered with the server.
 	 * 
@@ -191,6 +170,7 @@ public final class Connector {
 	 */
 	public static void broadcastUpdates(GameState gs) {
 		sseWebTarget.request().post(Entity.entity(gs, "application/json"));
+		System.out.println("broadcast issued");
 	}
 	
 	/**
