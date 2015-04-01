@@ -1,5 +1,6 @@
 package de.hhn.se.labsw.gdt.client.gui;
 
+import de.hhn.se.labsw.gdt.client.controller.Controller;
 import de.hhn.se.labsw.gdt.client.util.Storage;
 import javafx.application.Application;
 import javafx.event.*;

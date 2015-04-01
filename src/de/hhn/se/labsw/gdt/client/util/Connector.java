@@ -1,7 +1,10 @@
 package de.hhn.se.labsw.gdt.client.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javafx.application.Platform;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -21,6 +24,8 @@ import org.glassfish.jersey.media.sse.SseFeature;
 
 import com.owlike.genson.ext.jaxrs.GensonJsonConverter;
 
+import de.hhn.se.labsw.gdt.client.controller.Controller;
+import de.hhn.se.labsw.gdt.client.gui.MainMenu;
 import de.hhn.se.labsw.gdt.library.*;
 
 /**
@@ -83,10 +88,20 @@ public final class Connector {
 	private static EventSource sseEventSource = new EventSource(sseWebTarget) {
 	    @Override
 	    public void onEvent(InboundEvent inboundEvent) {
-	    	System.out.println("listener responded");
 	    	GameState gs = inboundEvent.readData(GameState.class);
+	    	if (Controller.getMainMenu() != null && Controller.getMainMenu().isShowing()) { 
+	    		
+	    		Platform.runLater(new Runnable() {
+	    		    @Override
+	    		    public void run() {
+	    		    	((MainMenu)Controller.getMainMenu()).refreshBrowser();
+	    		    }
+	    		});
+	    	}
+	    	
+	    	// debug
 	    	controllerGs = gs;
-        	System.out.println("listener responded");
+        	
 	    }
 	};
 	
@@ -196,6 +211,9 @@ public final class Connector {
 		for (String user : users) {
 			gs = new GameState();
 			gs.setHost(new User(user));
+			gs.setPlayers(new ArrayList<Player>());
+			gs.addPlayer(new Player(user));
+			gs.addPlayer(new Player("testPlayer"));
 			postGame(gs.getHost().getName(), gs);
 			System.out.println("Game State sent for user \t\t" + user + " = " + getGame(user).getHost().getName());
 			try{

@@ -22,7 +22,6 @@ public class Utility {
 	}
 	
 	public static ObservableList<String> getGameData() {
-//		List<String> playerNames = new ArrayList<String>();
 		ObservableList<String> listData = FXCollections.observableArrayList();
 		if (Storage.inspectedGame != null) {
 			ArrayList<Player> players = Storage.inspectedGame.getPlayers();
@@ -30,12 +29,9 @@ public class Utility {
 			if (players != null && players.size() > 0) {
 				for (Player p : players) {
 					listData.add(p.getName());
-		//			playerNames.add(p.getName());
 				}
 			}
-//		Storage.inspectedPlayers = playerNames;
 		}
-		listData.add("test");
 		return listData;
 	}
 	
@@ -44,15 +40,26 @@ public class Utility {
 		if (gameId != null && gameId.length() > 0) {
 			GameState gs = Connector.getGame(gameId);
 			if(inspect) {
-				Storage.inspectedGame = new Game(gs);
+				Storage.inspectedGame = gs;
 			} else {
-				Storage.hostedGame = new Game(gs);
+				Storage.hostedGame = gs;
 			}
 		}
 	}
 	
-	public static void getPlayerData(String name) {
-		
+	public static GameState cloneGameState(GameState gs) {
+		GameState newGs = new GameState();
+		newGs.setActivePlayer(gs.getActivePlayer());
+		newGs.setHost(gs.getHost());
+		newGs.setMap(gs.getMap());
+		newGs.setPhaseRoundStatus(gs.getPhaseRoundStatus());
+		newGs.setPlayers(gs.getPlayers());
+		return newGs;
+	}
+	
+	public static void refreshBrowser() {
 		
 	}
+	
+	
 }
