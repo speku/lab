@@ -57,16 +57,15 @@ public class GameState {
 	 */
 	protected int[][] phaseRoundStatus;
 	
-
+//	public GameState() {
+//		this.players = new ArrayList<Player>();
+//	}
 	
 	
 	// getters and setters for all fields - javaDoc will follow ... sometime ... please feel free to ...
 	public void addPlayer(Player player) {
+		
 		this.players.add(player);
-	}
-	
-	public void removePlayer(Player player) {
-		this.players.remove(player);
 	}
 	
 	public Player getActivePlayer() {

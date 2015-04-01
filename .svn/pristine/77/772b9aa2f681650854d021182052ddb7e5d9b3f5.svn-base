@@ -1,6 +1,6 @@
 package de.hhn.se.labsw.gdt.library;
 
-
+import java.awt.Color;
 
 
 
@@ -37,17 +37,13 @@ public class Player extends PlayerState implements PlayerDefaults{
 	 * @param age
 	 * 			the age of the player
 	 */
-	public Player(String name, String color, int ap, int age, int id) {
+	public Player(String name, Color color, int ap, int age, int id) {
 		
 		this.name = name;
 		this.color = color;
 		this.ap = ap;
 		this.apCustomized = ap;
 		this.age = age;
-	}
-	
-	public Player(String name) {
-		this.name = name;
 	}
 	
 	/**
@@ -127,7 +123,7 @@ public class Player extends PlayerState implements PlayerDefaults{
 	 * @param color
 	 * 			the new color of the player
 	 */
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
 	
@@ -137,7 +133,7 @@ public class Player extends PlayerState implements PlayerDefaults{
 	 * @return
 	 * 			the color of the player
 	 */
-	public String getColor() {
+	public Color getColor() {
 		return this.color;
 	}
 	
